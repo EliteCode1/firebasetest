@@ -14,16 +14,18 @@ import java.util.concurrent.ExecutionException;
 public class UserRepository {
 
     private static final String COL_NAME="Users";
-    Firestore dbFirestore = FirestoreClient.getFirestore();
+
 
     // Method to save User
     public String saveUserDetails(Users user,String id) throws InterruptedException, ExecutionException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(id).set(user);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 
     //Method to get a single UserDetails
     public Users getUserDetails(String id) throws InterruptedException, ExecutionException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
         DocumentReference documentReference = dbFirestore.collection(COL_NAME).document(id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
 
@@ -41,6 +43,7 @@ public class UserRepository {
 
     //Method to get All user info
     public List<Users> getAllUsers() throws ExecutionException, InterruptedException {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
         ApiFuture<QuerySnapshot> future = dbFirestore.collection(COL_NAME).get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
         List<Users> user = new ArrayList<>();
@@ -53,13 +56,14 @@ public class UserRepository {
 
     // Method to Update Existing User
    public String updateUserDetails(String id,Users user) throws InterruptedException, ExecutionException {
-
+       Firestore dbFirestore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(id).set(user);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 
     // Method to Delete User
     public String deleteUser(String id) {
+        Firestore dbFirestore = FirestoreClient.getFirestore();
         dbFirestore.collection(COL_NAME).document(id).delete();
         return "Document  ID "+id+" has been deleted";
     }

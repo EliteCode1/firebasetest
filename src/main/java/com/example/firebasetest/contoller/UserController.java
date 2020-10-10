@@ -19,6 +19,8 @@ Delete User:- /deleteUser
 Parameter:- String id
 Save User:- /createUser
 Parameter:- String id, User object
+GetUserById:-/getUserDetails
+Parameter:- String id
  */
 
 @RestController
